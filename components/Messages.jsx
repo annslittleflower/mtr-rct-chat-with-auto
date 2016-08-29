@@ -12,11 +12,7 @@ class Messages extends Component {
         if(Meteor.user().profile==null){
             alert('You have to choose your city');
         }else{
-            Sms.insert({
-                'text':text,
-                'city':Meteor.user().profile.city,
-                'userName':Meteor.user().profile.name
-            });
+            Meteor.call('sms.insert', text);
         }
         
 
@@ -44,6 +40,7 @@ class Messages extends Component {
 }
 
 export default createContainer(() => {
+    Meteor.subscribe('sms');
     let sms;
         if(Meteor.user().profile!=null){
             sms = Sms.find({'city':Meteor.user().profile.city}).fetch()
