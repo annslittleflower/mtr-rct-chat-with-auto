@@ -8,13 +8,18 @@ class Messages extends Component {
     formSubmit(e){
         e.preventDefault();
         const text = ReactDOM.findDOMNode(this.refs.smsInput).value.trim();
- 
-        Sms.insert({
-            'text':text,
-            'city':Meteor.user().profile.city,
-            'userName':Meteor.user().profile.name
-        });
- 
+
+        if(Meteor.user().profile==null){
+            alert('You have to choose your city');
+        }else{
+            Sms.insert({
+                'text':text,
+                'city':Meteor.user().profile.city,
+                'userName':Meteor.user().profile.name
+            });
+        }
+        
+
         ReactDOM.findDOMNode(this.refs.smsInput).value = '';
     }
 
